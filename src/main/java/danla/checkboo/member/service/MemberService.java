@@ -24,6 +24,11 @@ public class MemberService {
             throw new RestApiException(MemberErrorCode.ALREADY_SIGNED_UP_EMAIL);
         }
 
-        repository.save(new Member(email, password, username));
+        repository.save(Member.builder()
+                .email(email)
+                .password(password)
+                .username(username)
+                .build()
+        );
     }
 }
