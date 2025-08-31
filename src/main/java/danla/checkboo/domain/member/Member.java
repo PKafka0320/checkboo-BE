@@ -34,10 +34,10 @@ public class Member extends BaseEntity {
 	@Column(name = "username", nullable = false)
 	private String username;
 
-	@Column(name = "ltuid_v2")
+	@Column(name = "ltuid_v2", length = 1024)
 	private String ltuidV2;
 
-	@Column(name = "ltoken_v2")
+	@Column(name = "ltoken_v2", length = 1024)
 	private String ltokenV2;
 
 	public void updateToken(String ltuidV2, String ltokenV2) {

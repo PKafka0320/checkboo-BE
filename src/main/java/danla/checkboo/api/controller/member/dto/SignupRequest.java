@@ -9,7 +9,7 @@ public record SignupRequest(
 		regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$",
 		message = "이메일 형식이 올바르지 않습니다."
 	)
-	@NotBlank
+	@NotBlank(message = "비밀번호는 필수 입력 값입니다.")
 	String email,
 
 	@NotBlank(message = "비밀번호는 필수 입력 값입니다.")

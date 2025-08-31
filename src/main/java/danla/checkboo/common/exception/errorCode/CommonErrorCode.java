@@ -13,7 +13,10 @@ import lombok.RequiredArgsConstructor;
 public enum CommonErrorCode implements ErrorCode {
 
 	SERVER_ERROR(INTERNAL_SERVER_ERROR, "내부 서버 오류"),
-	INVALID_PARAMETER(BAD_REQUEST, "입력값 오류.");
+	INVALID_PARAMETER(BAD_REQUEST, "입력값 오류."),
+	FAIL_ENCRYPT(INTERNAL_SERVER_ERROR, "암호화 실패"),
+	FAIL_DECRYPT(INTERNAL_SERVER_ERROR, "복호화 실패"),
+	;
 
 	private final HttpStatus httpStatus;
 	private final String message;

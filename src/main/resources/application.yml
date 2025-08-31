@@ -12,3 +12,6 @@ spring:
     hibernate:
       format_sql: true
       ddl-auto: create-drop
+
+crypto:
+  key: ${CRYPTO_KEY}

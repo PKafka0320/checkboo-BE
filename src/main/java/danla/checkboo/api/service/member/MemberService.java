@@ -6,6 +6,7 @@ import static danla.checkboo.common.exception.errorCode.MemberErrorCode.PASSWORD
 
 import java.util.Optional;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,16 +14,21 @@ import danla.checkboo.api.controller.member.dto.SearchResponse;
 import danla.checkboo.common.exception.CheckBooException;
 import danla.checkboo.domain.member.Member;
 import danla.checkboo.domain.member.MemberRepository;
+import danla.checkboo.utility.AesEncryptor;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
 public class MemberService {
 
 	private final MemberRepository repository;
+	private final PasswordEncoder passwordEncoder;
+	private final AesEncryptor aesEncryptor;
 
 	@Transactional
 	public void signup(String email, String password, String username) {
@@ -31,9 +37,11 @@ public class MemberService {
 			throw new CheckBooException(ALREADY_SIGNED_UP_EMAIL);
 		}
 
+		String encodedPassword = passwordEncoder.encode(password);
+
 		repository.save(Member.builder()
 			.email(email)
-			.password(password)
+			.password(encodedPassword)
 			.username(username)
 			.build()
 		);
@@ -42,7 +50,10 @@ public class MemberService {
 	@Transactional
 	public void updateToken(Long memberId, String uid, String token) {
 		Member member = repository.findById(memberId).orElseThrow(() -> new CheckBooException(MEMBER_NOT_FOUND));
-		member.updateToken(uid, token);
+
+		String encryptUid = aesEncryptor.encrypt(uid);
+		String encryptToken = aesEncryptor.encrypt(token);
+		member.updateToken(encryptUid, encryptToken);
 	}
 
 	public SearchResponse searchMember(Long memberId) {
@@ -53,7 +64,7 @@ public class MemberService {
 	public void login(String username, String password, HttpServletRequest request) {
 		Member member = repository.findByUsername(username).orElseThrow(() -> new CheckBooException(MEMBER_NOT_FOUND));
 
-		if (!member.getPassword().equals(password)) {
+		if (!passwordEncoder.matches(password, member.getPassword())) {
 			throw new CheckBooException(PASSWORD_NOT_CORRECT);
 		}
 
