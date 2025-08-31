@@ -32,12 +32,7 @@ public class HoyolabClient {
 		AttendanceRequest requestBody = new AttendanceRequest(ACT_ID, LANG);
 
 		HttpEntity<AttendanceRequest> entity = new HttpEntity<>(requestBody, headers);
-		ResponseEntity<Object> response = restTemplate.exchange(
-			URL,
-			HttpMethod.POST,
-			entity,
-			Object.class
-		);
+		ResponseEntity<Object> response = restTemplate.exchange(URL, HttpMethod.POST, entity, Object.class);
 		Object body = response.getBody();
 		log.info("attendance check of member {} result: {}", memberId, body);
 	}
