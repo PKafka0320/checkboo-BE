@@ -5,4 +5,4 @@ FROM eclipse-temurin:21-jdk-jammy
 COPY ./checkboo-0.0.1-SNAPSHOT.jar /app/app.jar
 
 # 앱 실행
-ENTRYPOINT ["java","-jar","/app/app.jar"]
+ENTRYPOINT ["java", "-Duser.timezone=Asia/Seoul", "-jar", "/app/app.jar"]

@@ -21,7 +21,7 @@ public class AttendanceScheduler {
 	private final AesEncryptor aesEncryptor;
 	private final HoyolabClient hoyolabClient;
 
-	@Scheduled(cron = "0 0 2 * * *")
+	@Scheduled(cron = "0 30 1 * * *")
 	public void callExternalApiDaily() {
 		log.info("schedule task start");
 		List<Member> members = memberRepository.findAll();
