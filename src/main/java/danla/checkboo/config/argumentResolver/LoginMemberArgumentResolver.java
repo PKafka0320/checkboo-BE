@@ -1,5 +1,7 @@
 package danla.checkboo.config.argumentResolver;
 
+import static danla.checkboo.common.exception.errorCode.MemberErrorCode.NEED_LOGIN;
+
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -10,7 +12,6 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 import danla.checkboo.annotation.LoginMember;
 import danla.checkboo.common.exception.CheckBooException;
-import danla.checkboo.common.exception.errorCode.MemberErrorCode;
 import danla.checkboo.domain.member.Member;
 import danla.checkboo.domain.member.MemberRepository;
 import jakarta.annotation.Nonnull;
@@ -42,10 +43,10 @@ public class LoginMemberArgumentResolver implements HandlerMethodArgumentResolve
 		HttpSession session = request.getSession(false);
 
 		if (session == null || session.getAttribute("memberId") == null) {
-			throw new CheckBooException(MemberErrorCode.NEED_LOGIN);
+			throw new CheckBooException(NEED_LOGIN);
 		}
 
 		Long memberId = (Long)session.getAttribute("memberId");
-		return memberRepository.findById(memberId).orElseThrow(() -> new CheckBooException(MemberErrorCode.NEED_LOGIN));
+		return memberRepository.findById(memberId).orElseThrow(() -> new CheckBooException(NEED_LOGIN));
 	}
 }
