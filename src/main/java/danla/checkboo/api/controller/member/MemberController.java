@@ -47,8 +47,8 @@ public class MemberController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Void> login(@RequestBody LoginRequest request, HttpServletRequest servlet) {
-		service.login(request.username(), request.password(), servlet);
+	public ResponseEntity<Void> login(@RequestBody @Valid LoginRequest request, HttpServletRequest servlet) {
+		service.login(request.email(), request.password(), servlet);
 		return ResponseEntity.noContent().build();
 	}
 }

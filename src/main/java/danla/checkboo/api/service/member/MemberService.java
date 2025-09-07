@@ -61,8 +61,8 @@ public class MemberService {
 		return SearchResponse.from(member);
 	}
 
-	public void login(String username, String password, HttpServletRequest request) {
-		Member member = repository.findByUsername(username).orElseThrow(() -> new CheckBooException(MEMBER_NOT_FOUND));
+	public void login(String email, String password, HttpServletRequest request) {
+		Member member = repository.findByEmail(email).orElseThrow(() -> new CheckBooException(MEMBER_NOT_FOUND));
 
 		if (!passwordEncoder.matches(password, member.getPassword())) {
 			throw new CheckBooException(PASSWORD_NOT_CORRECT);
