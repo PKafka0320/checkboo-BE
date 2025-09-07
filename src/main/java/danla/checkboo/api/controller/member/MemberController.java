@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import danla.checkboo.annotation.LoginMember;
 import danla.checkboo.api.controller.member.dto.LoginRequest;
+import danla.checkboo.api.controller.member.dto.MemberInfoResponse;
 import danla.checkboo.api.controller.member.dto.SearchResponse;
 import danla.checkboo.api.controller.member.dto.SignupRequest;
 import danla.checkboo.api.controller.member.dto.UpdateTokenRequest;
@@ -31,6 +32,11 @@ public class MemberController {
 		return ResponseEntity.ok(service.searchMember(member.getId()));
 	}
 
+	@GetMapping("/csrf-token")
+	public ResponseEntity<MemberInfoResponse> checkLoginStatus() {
+		return ResponseEntity.ok().build();
+	}
+
 	@PutMapping("/my/token")
 	public ResponseEntity<Void> updateToken(
 		@LoginMember Member member,
@@ -47,8 +53,10 @@ public class MemberController {
 	}
 
 	@PostMapping("/login")
-	public ResponseEntity<Void> login(@RequestBody @Valid LoginRequest request, HttpServletRequest servlet) {
-		service.login(request.email(), request.password(), servlet);
-		return ResponseEntity.noContent().build();
+	public ResponseEntity<MemberInfoResponse> login(
+		@RequestBody @Valid LoginRequest request,
+		HttpServletRequest servlet
+	) {
+		return ResponseEntity.ok(service.login(request.email(), request.password(), servlet));
 	}
 }

@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import danla.checkboo.api.controller.member.dto.MemberInfoResponse;
 import danla.checkboo.api.controller.member.dto.SearchResponse;
 import danla.checkboo.common.exception.CheckBooException;
 import danla.checkboo.domain.member.Member;
@@ -61,7 +62,7 @@ public class MemberService {
 		return SearchResponse.from(member);
 	}
 
-	public void login(String email, String password, HttpServletRequest request) {
+	public MemberInfoResponse login(String email, String password, HttpServletRequest request) {
 		Member member = repository.findByEmail(email).orElseThrow(() -> new CheckBooException(MEMBER_NOT_FOUND));
 
 		if (!passwordEncoder.matches(password, member.getPassword())) {
@@ -71,5 +72,7 @@ public class MemberService {
 		HttpSession session = request.getSession(true);
 		session.setAttribute("memberId", member.getId());
 		session.setMaxInactiveInterval(30 * 60);
+
+		return MemberInfoResponse.from(member);
 	}
 }
