@@ -32,11 +32,6 @@ public class MemberController {
 		return ResponseEntity.ok(service.searchMember(member.getId()));
 	}
 
-	@GetMapping("/csrf-token")
-	public ResponseEntity<MemberInfoResponse> checkLoginStatus() {
-		return ResponseEntity.ok().build();
-	}
-
 	@PutMapping("/my/token")
 	public ResponseEntity<Void> updateToken(
 		@LoginMember Member member,
