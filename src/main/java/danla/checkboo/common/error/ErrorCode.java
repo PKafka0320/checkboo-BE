@@ -1,12 +1,11 @@
-package danla.checkboo.common.exception.errorCode;
+package danla.checkboo.common.error;
 
 import org.springframework.http.HttpStatus;
 
 public interface ErrorCode {
+	HttpStatus getStatus();
 
-	String name();
-
-	HttpStatus getHttpStatus();
+	int getCode();
 
 	String getMessage();
 }

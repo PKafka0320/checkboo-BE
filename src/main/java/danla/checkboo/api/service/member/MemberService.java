@@ -1,8 +1,8 @@
 package danla.checkboo.api.service.member;
 
-import static danla.checkboo.common.exception.errorCode.MemberErrorCode.ALREADY_SIGNED_UP_EMAIL;
-import static danla.checkboo.common.exception.errorCode.MemberErrorCode.MEMBER_NOT_FOUND;
-import static danla.checkboo.common.exception.errorCode.MemberErrorCode.PASSWORD_NOT_CORRECT;
+import static danla.checkboo.common.error.ErrorCodes.ALREADY_SIGNED_UP_EMAIL;
+import static danla.checkboo.common.error.ErrorCodes.MEMBER_NOT_FOUND;
+import static danla.checkboo.common.error.ErrorCodes.PASSWORD_NOT_CORRECT;
 
 import java.util.Optional;
 
@@ -31,7 +31,6 @@ public class MemberService {
 	private final PasswordEncoder passwordEncoder;
 	private final AesEncryptor aesEncryptor;
 
-	@Transactional
 	public void signup(String email, String password, String username) {
 		Optional<Member> searchedEmail = repository.findByEmail(email);
 		if (searchedEmail.isPresent()) {

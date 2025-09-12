@@ -1,7 +1,7 @@
 package danla.checkboo.utility;
 
-import static danla.checkboo.common.exception.errorCode.CommonErrorCode.FAIL_DECRYPT;
-import static danla.checkboo.common.exception.errorCode.CommonErrorCode.FAIL_ENCRYPT;
+import static danla.checkboo.common.error.errorCode.CommonErrorCode.FAIL_DECRYPT;
+import static danla.checkboo.common.error.errorCode.CommonErrorCode.FAIL_ENCRYPT;
 import static javax.crypto.Cipher.DECRYPT_MODE;
 import static javax.crypto.Cipher.ENCRYPT_MODE;
 

@@ -1,6 +1,6 @@
 package danla.checkboo.config.argumentResolver;
 
-import static danla.checkboo.common.exception.errorCode.MemberErrorCode.NEED_LOGIN;
+import static danla.checkboo.common.error.ErrorCodes.NEED_LOGIN;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
